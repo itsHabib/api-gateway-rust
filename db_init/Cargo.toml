@@ -1,0 +1,14 @@
+[package]
+name = "db_init"
+version = "0.1.0"
+authors = ["Michael Habib <mhabib@pixability.com>"]
+edition = "2018"
+
+[dependencies]
+rusoto_core = "0.36.0"
+rusoto_dynamodb = "0.36.0"
+dynomite = "0.1"
+dynomite-derive = "0.1"
+rand = "0.6.1"
+
+
