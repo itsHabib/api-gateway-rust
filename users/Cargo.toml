@@ -1,0 +1,21 @@
+[package]
+name = "users"
+version = "0.1.0"
+authors = ["Michael Habib <mhabib@pixability.com>"]
+edition = "2018"
+
+[dependencies]
+lambda_runtime = { git = "https://github.com/awslabs/aws-lambda-rust-runtime"}
+lambda_http = { git = "https://github.com/awslabs/aws-lambda-rust-runtime"}
+serde = "1.0"
+serde_derive = "1.0"
+serde_json = "1.0"
+http = "0.1.1"
+
+#[dev-dependencies]
+log = "^0.4"
+simple_logger = "^1"
+
+[[bin]]
+name = "bootstrap"
+path = "src/main.rs"
