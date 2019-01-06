@@ -6,8 +6,6 @@ use std::error::Error;
 use http::{Error as HttpError, StatusCode};
 use lambda_http::{lambda, Body, IntoResponse, Request, RequestExt, Response};
 use lambda_runtime::{error::HandlerError, Context};
-use log::{self, error};
-use simple_logger;
 
 #[derive(Deserialize, Serialize, Debug)]
 struct User {
@@ -16,8 +14,7 @@ struct User {
 }
 
 fn main() -> Result<(), Box<dyn Error>> {
-    simple_logger::init_with_level(log::Level::Debug).unwrap();
-    lambda!(|req, c| router(req, c));
+    lambda!(router);
     Ok(())
 }
 
