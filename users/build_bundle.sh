@@ -6,10 +6,9 @@ rm -f rust.zip
 
 if [ "$1" = --keep-release ]; then
     echo "bundling project.."
-    # create temporarily rename dockerignore 
+    # temporarily rename dockerignore
     mv -f .dockerignore .dockerignore-$commit_hash
-    docker build -f Dockerfile.bundle -t rust-lambda:bundle \
-    --build-arg commit_hash=$commit_hash .
+    docker build  -t rust-lambda:bundle --build-arg commit_hash=$commit_hash .
     mv -f .dockerignore-$commit_hash .dockerignore
 
     echo "retrieving bundle and release dir.."
@@ -19,13 +18,12 @@ if [ "$1" = --keep-release ]; then
     docker cp $id:/bundles-$commit_hash/rust.zip $project_dir
     docker cp $id:/app/target/release $project_dir/target/
     docker stop $id && docker rm $id
-    
+
     echo "complete!"
 
 else
     echo "bundling project from scratch.."
-    docker build -f Dockerfile.bundle -t rust-lambda:bundle \
-    --build-arg commit_hash=$commit_hash .
+    docker build -t rust-lambda:bundle --build-arg commit_hash=$commit_hash .
 
     echo "retrieving bundle.."
     id=$(docker run -d rust-lambda:bundle tail -f /dev/null)
