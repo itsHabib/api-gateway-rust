@@ -30,5 +30,5 @@ RUN cargo clippy --all-targets --all-features -- -D warnings && cargo build --re
 # bundle
 RUN mkdir /bundles-${COMMIT_HASH} && zip -j /bundles-${COMMIT_HASH}/build-${COMMIT_HASH}.zip target/release/bootstrap
 
-# Copy from builder and push to s3
+# push to s3
 RUN aws s3 cp /bundles-${COMMIT_HASH}/build-${COMMIT_HASH}.zip s3://lambda-rust-builds/build-${COMMIT_HASH}.zip
