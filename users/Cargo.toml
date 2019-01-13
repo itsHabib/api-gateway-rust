@@ -3,6 +3,7 @@ name = "users"
 version = "0.1.0"
 authors = ["Michael Habib <mhabib@pixability.com>"]
 edition = "2018"
+autobins = false
 
 [dependencies]
 lambda_runtime = { git = "https://github.com/awslabs/aws-lambda-rust-runtime"}
