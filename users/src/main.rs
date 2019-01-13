@@ -1,11 +1,10 @@
 #[macro_use]
 extern crate serde_derive;
 extern crate serde_json;
-use std::error::Error;
-
 use http::{Error as HttpError, StatusCode};
-use lambda_http::{lambda, Body, IntoResponse, Request, RequestExt, Response};
+use lambda_http::{lambda, Body, IntoResponse, Request, Response};
 use lambda_runtime::{error::HandlerError, Context};
+use std::error::Error;
 
 #[derive(Deserialize, Serialize, Debug)]
 struct User {
@@ -26,14 +25,14 @@ fn router(req: Request, c: Context) -> Result<impl IntoResponse, HandlerError> {
     }
 }
 
-fn not_allowed(req: Request, c: Context) -> Result<Response<Body>, HandlerError> {
+fn not_allowed(_req: Request, c: Context) -> Result<Response<Body>, HandlerError> {
     Response::builder()
         .status(StatusCode::METHOD_NOT_ALLOWED)
         .body(Body::from(()))
         .map_err(|err| http_to_handler_err(err, c))
 }
 
-fn get_users(req: Request, c: Context) -> Result<Response<Body>, HandlerError> {
+fn get_users(_req: Request, _c: Context) -> Result<Response<Body>, HandlerError> {
     /*
      *getting path parameters
      *let path_params = req.path_parameters();
