@@ -1,6 +1,5 @@
-FROM lambci/lambda:build-provided
+FROM lambci/lambda:build-provided as bundler
 
-ARG COMMIT_HASH
 ARG AWS_SECRET_ACCESS_KEY
 ARG AWS_ACCESS_KEY_ID
 ARG AWS_DEFAULT_REGION
@@ -28,7 +27,27 @@ WORKDIR /app
 RUN cargo clippy --all-targets --all-features -- -D warnings && cargo build --release
 
 # bundle
-RUN mkdir /bundles-${COMMIT_HASH} && zip -j /bundles-${COMMIT_HASH}/build-${COMMIT_HASH}.zip target/release/bootstrap
+RUN mkdir /bundles && zip -j /bundles/bundle.zip target/release/bootstrap
 
-# push to s3
-RUN aws s3 cp /bundles-${COMMIT_HASH}/build-${COMMIT_HASH}.zip s3://lambda-rust-builds/build-${COMMIT_HASH}.zip
+# Plan update
+FROM hashicorp/terraform:light
+
+ARG COMMIT_HASH
+ARG AWS_SECRET_ACCESS_KEY
+ARG AWS_ACCESS_KEY_ID
+ARG AWS_DEFAULT_REGION
+
+ENV AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+ENV AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+ENV AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
+
+COPY --from=bundler /bundles/bundle.zip /bundles/bundle.zip
+COPY --from=bundler /app/terraform /terraform
+
+# Create deploy plan
+WORKDIR /terraform
+RUN terraform init
+RUN terraform plan \
+-target=aws_lambda_function.users \
+-out=terraform.${COMMIT_HASH}.tfplan \
+-var="tag=${COMMIT_HASH}"
