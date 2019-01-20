@@ -5,17 +5,14 @@ We will use terraform to create all the resources needed in AWS. If you are not
 interestd in having terraform provision the resources, use the links below to
 do it manually. The three main components that will be created will the be the
 API gateway resources, lambda function, and S3 buckets. To get started checkout
-the apporpriate branch and navigate inside the terraform directory. The `master`
-and `advanced` branches contain the terraform code to create what is needed for
-the YouTube video **(work in progress)**. The `basic` branch has the terraform
-code needed for the blog post.
+the apporpriate branch. The `advanced` branch will contain the terraform code
+to create what is needed for the YouTube video **(work in progress)**. The
+`basic` and `master` branches have the terraform code needed for the blog post.
 
 ### Setting up Remote State
 To setup remote state navigate to `users/terraform/state-storage` and open
 `main.tf`. Rename the bucket name to something of your choosing, S3 bucket names
-need to be globally unique. Once that is done run `terraform plan` and if
-the plan that is spit out is to create a bucket then run `terraform apply -auto-approve`.
-
+need to be globally unique. Once that is done from `users/` run `./deploy.sh --state`.
 Once the bucket has been created, edit the `bucket` value for the terraform backend in
 `users/terraform/main.tf`. Use the same value as the bucket for the state
 storage. These are the only changes that should be needed to run the other commands
@@ -32,6 +29,5 @@ links to documentation written by AWS.
  - [DynamoDB Developer Guide](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html)
 
 ## Cleaning Up
-To clean up with terraform, run `terraform destroy -var "tag=$(git rev-parse --short HEAD)" -auto-approve`
-in `users/terraform` and `users/terraform/state-storage`. That command will
-destroy EVERYTHING that was created with the `terraform apply` commands.
+To clean up with terraform, from `users/` run `./destroy.sh` and once that is complete
+run `./destroy.sh --state`. Those commands will destroy EVERYTHING that was created with `deploy.sh`.
