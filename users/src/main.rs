@@ -17,6 +17,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     Ok(())
 }
 
+// Call handler functionb based on request method
 fn router(req: Request, c: Context) -> Result<impl IntoResponse, HandlerError> {
     match req.method().as_str() {
         "GET" => get_users(req, c),
@@ -40,7 +41,7 @@ fn get_users(_req: Request, _c: Context) -> Result<Response<Body>, HandlerError>
      */
     Ok(serde_json::json!(init_users()).into_response())
 }
-
+// only deserializes and sends the body back
 fn add_user(req: Request, c: Context) -> Result<Response<Body>, HandlerError> {
     match serde_json::from_slice::<User>(req.body().as_ref()) {
         Ok(user) => {
@@ -67,6 +68,7 @@ fn init_users() -> Vec<User> {
         .collect()
 }
 
+// fills with dummy data
 fn fill_user_fields(name: &str) -> User {
     User {
         username: name.to_string(),
