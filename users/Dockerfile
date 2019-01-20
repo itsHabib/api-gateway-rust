@@ -50,4 +50,6 @@ RUN terraform init
 RUN terraform plan \
 -target=aws_lambda_function.users \
 -out=terraform.${COMMIT_HASH}.tfplan \
+-refresh=true \
 -var="tag=${COMMIT_HASH}"
+
