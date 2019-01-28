@@ -1,2 +1,12 @@
+# Rust
 **/target
 **/*.rs.bk
+
+# Terraform
+**/.terraform
+terraform.tfstate  # don't need it for content
+
+# Other
+*.zip
+.python-version
+
