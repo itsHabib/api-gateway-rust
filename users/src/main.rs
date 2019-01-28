@@ -1,7 +1,7 @@
 #[macro_use]
 extern crate serde_derive;
 extern crate serde_json;
-use http::{Error as HttpError, StatusCode};
+use http::StatusCode;
 use lambda_http::{lambda, Body, IntoResponse, Request, Response};
 use lambda_runtime::{error::HandlerError, Context};
 use std::error::Error;
@@ -26,11 +26,11 @@ fn router(req: Request, c: Context) -> Result<impl IntoResponse, HandlerError> {
     }
 }
 
-fn not_allowed(_req: Request, c: Context) -> Result<Response<Body>, HandlerError> {
-    Response::builder()
+fn not_allowed(_req: Request, _c: Context) -> Result<Response<Body>, HandlerError> {
+    Ok(Response::builder()
         .status(StatusCode::METHOD_NOT_ALLOWED)
         .body(Body::from(()))
-        .map_err(|err| http_to_handler_err(err, c))
+        .expect("err creating response"))
 }
 
 fn get_users(_req: Request, _c: Context) -> Result<Response<Body>, HandlerError> {
@@ -42,22 +42,18 @@ fn get_users(_req: Request, _c: Context) -> Result<Response<Body>, HandlerError>
     Ok(serde_json::json!(init_users()).into_response())
 }
 // only deserializes and sends the body back
-fn add_user(req: Request, c: Context) -> Result<Response<Body>, HandlerError> {
+fn add_user(req: Request, _c: Context) -> Result<Response<Body>, HandlerError> {
     match serde_json::from_slice::<User>(req.body().as_ref()) {
         Ok(user) => {
             let mut resp = serde_json::json!(user).into_response();
             *resp.status_mut() = StatusCode::CREATED;
             Ok(resp)
         }
-        Err(_) => Response::builder()
+        Err(_) => Ok(Response::builder()
             .status(StatusCode::BAD_REQUEST)
             .body("bad request".into())
-            .map_err(|err| http_to_handler_err(err, c)),
+            .expect("err creating response")),
     }
-}
-
-fn http_to_handler_err(err: HttpError, c: Context) -> HandlerError {
-    c.new_error(&*format!("{}", err))
 }
 
 fn init_users() -> Vec<User> {

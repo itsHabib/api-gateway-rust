@@ -275,13 +275,13 @@ dependencies = [
 [[package]]
 name = "lambda_http"
 version = "0.1.0"
-source = "git+https://github.com/awslabs/aws-lambda-rust-runtime#6f693fbfd9f82e027c176436b18f2f0bd9f71f2a"
+source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "base64 0.10.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "failure 0.1.5 (registry+https://github.com/rust-lang/crates.io-index)",
  "failure_derive 0.1.5 (registry+https://github.com/rust-lang/crates.io-index)",
  "http 0.1.14 (registry+https://github.com/rust-lang/crates.io-index)",
- "lambda_runtime 0.1.0 (git+https://github.com/awslabs/aws-lambda-rust-runtime)",
+ "lambda_runtime 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde 1.0.84 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde_derive 1.0.84 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde_json 1.0.34 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -291,13 +291,11 @@ dependencies = [
 
 [[package]]
 name = "lambda_runtime"
-version = "0.1.0"
-source = "git+https://github.com/awslabs/aws-lambda-rust-runtime#6f693fbfd9f82e027c176436b18f2f0bd9f71f2a"
+version = "0.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
- "backtrace 0.3.13 (registry+https://github.com/rust-lang/crates.io-index)",
- "chrono 0.4.6 (registry+https://github.com/rust-lang/crates.io-index)",
- "hyper 0.12.19 (registry+https://github.com/rust-lang/crates.io-index)",
- "lambda_runtime_client 0.1.0 (git+https://github.com/awslabs/aws-lambda-rust-runtime)",
+ "failure 0.1.5 (registry+https://github.com/rust-lang/crates.io-index)",
+ "lambda_runtime_core 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "log 0.4.6 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde 1.0.84 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde_derive 1.0.84 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -307,17 +305,56 @@ dependencies = [
 
 [[package]]
 name = "lambda_runtime_client"
-version = "0.1.0"
-source = "git+https://github.com/awslabs/aws-lambda-rust-runtime#6f693fbfd9f82e027c176436b18f2f0bd9f71f2a"
+version = "0.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
- "backtrace 0.3.13 (registry+https://github.com/rust-lang/crates.io-index)",
+ "failure 0.1.5 (registry+https://github.com/rust-lang/crates.io-index)",
  "http 0.1.14 (registry+https://github.com/rust-lang/crates.io-index)",
  "hyper 0.12.19 (registry+https://github.com/rust-lang/crates.io-index)",
+ "lambda_runtime_errors 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "log 0.4.6 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde 1.0.84 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde_derive 1.0.84 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde_json 1.0.34 (registry+https://github.com/rust-lang/crates.io-index)",
  "tokio 0.1.13 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
+name = "lambda_runtime_core"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+dependencies = [
+ "backtrace 0.3.13 (registry+https://github.com/rust-lang/crates.io-index)",
+ "chrono 0.4.6 (registry+https://github.com/rust-lang/crates.io-index)",
+ "failure 0.1.5 (registry+https://github.com/rust-lang/crates.io-index)",
+ "hyper 0.12.19 (registry+https://github.com/rust-lang/crates.io-index)",
+ "lambda_runtime_client 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "lambda_runtime_errors 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "log 0.4.6 (registry+https://github.com/rust-lang/crates.io-index)",
+ "rustc_version 0.2.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "tokio 0.1.13 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
+name = "lambda_runtime_errors"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+dependencies = [
+ "failure 0.1.5 (registry+https://github.com/rust-lang/crates.io-index)",
+ "lambda_runtime_errors_derive 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "log 0.4.6 (registry+https://github.com/rust-lang/crates.io-index)",
+ "serde_json 1.0.34 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
+name = "lambda_runtime_errors_derive"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+dependencies = [
+ "proc-macro2 0.4.24 (registry+https://github.com/rust-lang/crates.io-index)",
+ "quote 0.6.10 (registry+https://github.com/rust-lang/crates.io-index)",
+ "syn 0.15.23 (registry+https://github.com/rust-lang/crates.io-index)",
+ "synstructure 0.10.1 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -904,8 +941,9 @@ name = "users"
 version = "0.1.0"
 dependencies = [
  "http 0.1.14 (registry+https://github.com/rust-lang/crates.io-index)",
- "lambda_http 0.1.0 (git+https://github.com/awslabs/aws-lambda-rust-runtime)",
- "lambda_runtime 0.1.0 (git+https://github.com/awslabs/aws-lambda-rust-runtime)",
+ "lambda_http 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "lambda_runtime 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "lambda_runtime_errors 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde 1.0.84 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde_derive 1.0.84 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde_json 1.0.34 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -997,9 +1035,12 @@ dependencies = [
 "checksum iovec 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)" = "dbe6e417e7d0975db6512b90796e8ce223145ac4e33c377e4a42882a0e88bb08"
 "checksum itoa 0.4.3 (registry+https://github.com/rust-lang/crates.io-index)" = "1306f3464951f30e30d12373d31c79fbd52d236e5e896fd92f96ec7babbbe60b"
 "checksum kernel32-sys 0.2.2 (registry+https://github.com/rust-lang/crates.io-index)" = "7507624b29483431c0ba2d82aece8ca6cdba9382bff4ddd0f7490560c056098d"
-"checksum lambda_http 0.1.0 (git+https://github.com/awslabs/aws-lambda-rust-runtime)" = "<none>"
-"checksum lambda_runtime 0.1.0 (git+https://github.com/awslabs/aws-lambda-rust-runtime)" = "<none>"
-"checksum lambda_runtime_client 0.1.0 (git+https://github.com/awslabs/aws-lambda-rust-runtime)" = "<none>"
+"checksum lambda_http 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)" = "c5614ea28ebeb9c08efa98c2fd5302153adc9792c45ee81f352ffcfbedef6c96"
+"checksum lambda_runtime 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)" = "eb6f5263f79e29c69b349c6cd906381674871a03625a04fbcb686af363a7cd03"
+"checksum lambda_runtime_client 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)" = "d40b336f2f67019723077999f46c42ae79c0672fb49e71f7811c049a46fa15c0"
+"checksum lambda_runtime_core 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)" = "39208658de5e01850b220e4e1aab223f4cc4aea73cac73986f8f53163c37bd2b"
+"checksum lambda_runtime_errors 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)" = "edc65224e35e9f86514394e8c4db27f3f0fce02a40b0f2d7d54b0f1528c0a606"
+"checksum lambda_runtime_errors_derive 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)" = "6eebda5e30caceb2702acf511b4744a2c624599a87477452ffd2d369936f35c0"
 "checksum lazy_static 1.2.0 (registry+https://github.com/rust-lang/crates.io-index)" = "a374c89b9db55895453a74c1e38861d9deec0b01b405a82516e9d5de4820dea1"
 "checksum lazycell 1.2.1 (registry+https://github.com/rust-lang/crates.io-index)" = "b294d6fa9ee409a054354afc4352b0b9ef7ca222c69b8812cbea9e7d2bf3783f"
 "checksum libc 0.2.46 (registry+https://github.com/rust-lang/crates.io-index)" = "023a4cd09b2ff695f9734c1934145a315594b7986398496841c7031a5a1bbdbd"
