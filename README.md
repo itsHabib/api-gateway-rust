@@ -1,5 +1,5 @@
 # API Gateway Rust
-API Gateway + Lambda + Rust cargo project for the [blog post]()
+API Gateway + Lambda + Rust cargo project for the [blog post](https://medium.freecodecamp.org/going-serverless-with-rust-and-api-gateway-aa5d1502c32e)
 and [YouTube video](). Both go over creating an api with API Gateway, AWS Lambda, and the Rust
 programming language. Other significant technologies used are DyanmoDB, Docker,
 and Terraform.
