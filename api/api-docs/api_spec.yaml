@@ -1,0 +1,186 @@
+openapi: "3.0.0"
+info:
+  version: "1.0.0"
+  title: "Users API"
+#servers:
+#- url: "{{base_url}}/{{stage}}"
+  #variables:
+    #basePath:
+#      default: "/{{stage}}"
+tags:
+- name: "users"
+  description: "Operations on users"
+paths:
+  /users:
+    post:
+      x-amazon-apigateway-integration:
+        uri: ""
+        passthroughBehavior: "when_no_match"
+        timeoutInMillis: 29000
+        httpMethod: "POST"
+        type: "aws_proxy"
+      tags:
+      - "users"
+      summary: "Add a new user"
+      description: ""
+      operationId: "addUser"
+      requestBody:
+        $ref: "#/components/requestBodies/UserBody"
+      responses:
+        '201':
+          description: "Created"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        '400':
+          $ref: "#/components/responses/BadRequest"
+    get:
+      x-amazon-apigateway-integration:
+        uri: ""
+        passthroughBehavior: "when_no_match"
+        timeoutInMillis: 29000
+        httpMethod: "POST"
+        type: "aws_proxy"
+      tags:
+      - "users"
+      summary: "Get all users"
+      description: ""
+      operationId: "getUsers"
+      responses:
+        '200':
+          description: "Ok"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/User"
+  /users/{username}:
+    get:
+      x-amazon-apigateway-integration:
+        uri: ""
+        passthroughBehavior: "when_no_match"
+        timeoutInMillis: 29000
+        httpMethod: "POST"
+        type: "aws_proxy"
+      tags:
+      - "users"
+      summary: "Get user by user name"
+      description: ""
+      operationId: "getUserByName"
+      parameters:
+      - name: "username"
+        in: "path"
+        required: true
+        schema:
+          type: "integer"
+      responses:
+        '200':
+          description: "Ok"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        '400':
+          $ref: "#/components/responses/BadRequest"
+        '404':
+          $ref: "#/components/responses/NotFound"
+    put:
+      x-amazon-apigateway-integration:
+        uri: ""
+        passthroughBehavior: "when_no_match"
+        timeoutInMillis: 29000
+        httpMethod: "POST"
+        type: "aws_proxy"
+      tags:
+      - "users"
+      summary: "Update user"
+      operationId: "updateUser"
+      parameters:
+      - name: "username"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      requestBody:
+        $ref: '#/components/requestBodies/UserBody'
+      responses:
+        '200':
+          description: "Ok"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        '400':
+          $ref: "#/components/responses/BadRequest"
+        '404':
+          $ref: "#/components/responses/NotFound"
+    delete:
+      x-amazon-apigateway-integration:
+        uri: ""
+        passthroughBehavior: "when_no_match"
+        timeoutInMillis: 29000
+        httpMethod: "POST"
+        type: "aws_proxy"
+      tags:
+      - "users"
+      summary: "Delete user"
+      operationId: "deleteUser"
+      parameters:
+      - name: "username"
+        in: "path"
+        required: true
+        schema:
+          type: "integer"
+      responses:
+        '200':
+          description: "Ok"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        '400':
+          $ref: "#/components/responses/BadRequest"
+        '404':
+          $ref: "#/components/responses/NotFound"
+components:
+  responses:
+    NotFound:
+      description: The specified resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    User:
+      type: object
+      properties:
+        username:
+          type: "string"
+        email:
+          type: "string"
+        age:
+          type: "integer"
+    Error:
+      type: object
+      properties:
+        code:
+          type: "integer"
+        msg:
+          type: "string"
+  requestBodies:
+    UserBody:
+      description: A JSON object containing a User object
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/User"
+

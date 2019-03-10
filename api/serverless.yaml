@@ -1,0 +1,98 @@
+service: users-api
+provider:
+  name: aws
+  runtime: rust
+  memorySize: 128
+  stage: dev
+  region: us-east-1
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "s3:ListBucket"
+      Resource:
+        Fn::Join:
+          - ""
+          - - "arn:aws:s3:::"
+            - "Ref" : "ServerlessDeploymentBucket"
+    - Effect: "Allow"
+      Action:
+        - "s3:PutObject"
+      Resource:
+        Fn::Join:
+          - ""
+          - - "arn:aws:s3:::"
+            - "Ref" : "ServerlessDeploymentBucket"
+            - "/*"
+    - Effect: "Allow"
+      Action:
+        - "dynamodb:Scan"
+        - "dynamodb:GetItem"
+        - "dynamodb:PutItem"
+        - "dynamodb:UpdateItem"
+        - "dynamodb:DeleteItem"
+      Resource:
+        Fn::GetAtt:
+          - UsersTable
+          - Arn
+package:
+  individually: true
+
+plugins:
+  - serverless-rust
+
+functions:
+  users:
+    handler: users
+    events:
+      - http:
+          path: /users
+          method: get
+      - http:
+          path: /users
+          method: post
+  users-username:
+    handler: users-username 
+    events:
+      - http:
+          path: /users/{username}
+          method: get
+          request:
+            parameters:
+              paths:
+                username: true
+      - http:
+          path: /users/{username}
+          method: put
+          request:
+            parameters:
+              paths:
+                username: true
+      - http:
+          path: /users/{username}
+          method: post
+          request:
+            parameters:
+              paths:
+                username: true
+      - http:
+          path: /users/{username}
+          method: delete
+          request:
+            parameters:
+              paths:
+                username: true
+resources:
+  Resources:
+    UsersTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: users
+        AttributeDefinitions:
+          - AttributeName: username
+            AttributeType: S
+        KeySchema:
+          - AttributeName: username
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5
