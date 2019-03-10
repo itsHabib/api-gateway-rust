@@ -6,6 +6,12 @@
 **/.terraform
 terraform.tfstate  # don't need it for content
 
+# Node
+**/node_modules
+
+# Serverless
+**/.serverless
+
 # Other
 *.zip
 .python-version

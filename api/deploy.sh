@@ -15,5 +15,5 @@ elif [[ $1 == "--state" ]]; then
     exit $?
 fi
 
-echo "updating code.."
-docker run --rm rust-lambda:${deploy_type:-latest} apply "terraform.$COMMIT_HASH.tfplan"
+echo "deploying..."
+docker run --rm rust-lambda:${deploy_type:-latest} apply "terraform.tfplan"

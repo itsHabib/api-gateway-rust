@@ -2,12 +2,23 @@ openapi: "3.0.0"
 info:
   version: "1.0.0"
   title: "Users API"
+#servers:
+#- url: "{{base_url}}/{{stage}}"
+  #variables:
+    #basePath:
+#      default: "/{{stage}}"
 tags:
 - name: "users"
   description: "Operations on users"
 paths:
   /users:
     post:
+      x-amazon-apigateway-integration:
+        uri: ""
+        passthroughBehavior: "when_no_match"
+        timeoutInMillis: 29000
+        httpMethod: "POST"
+        type: "aws_proxy"
       tags:
       - "users"
       summary: "Add a new user"
@@ -25,6 +36,12 @@ paths:
         '400':
           $ref: "#/components/responses/BadRequest"
     get:
+      x-amazon-apigateway-integration:
+        uri: ""
+        passthroughBehavior: "when_no_match"
+        timeoutInMillis: 29000
+        httpMethod: "POST"
+        type: "aws_proxy"
       tags:
       - "users"
       summary: "Get all users"
@@ -41,6 +58,12 @@ paths:
                   $ref: "#/components/schemas/User"
   /users/{username}:
     get:
+      x-amazon-apigateway-integration:
+        uri: ""
+        passthroughBehavior: "when_no_match"
+        timeoutInMillis: 29000
+        httpMethod: "POST"
+        type: "aws_proxy"
       tags:
       - "users"
       summary: "Get user by user name"
@@ -64,6 +87,12 @@ paths:
         '404':
           $ref: "#/components/responses/NotFound"
     put:
+      x-amazon-apigateway-integration:
+        uri: ""
+        passthroughBehavior: "when_no_match"
+        timeoutInMillis: 29000
+        httpMethod: "POST"
+        type: "aws_proxy"
       tags:
       - "users"
       summary: "Update user"
@@ -88,6 +117,12 @@ paths:
         '404':
           $ref: "#/components/responses/NotFound"
     delete:
+      x-amazon-apigateway-integration:
+        uri: ""
+        passthroughBehavior: "when_no_match"
+        timeoutInMillis: 29000
+        httpMethod: "POST"
+        type: "aws_proxy"
       tags:
       - "users"
       summary: "Delete user"
